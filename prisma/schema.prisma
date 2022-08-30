@@ -1,0 +1,75 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator erd {
+  provider = "prisma-erd-generator"
+  output = "../ERD.svg"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+model User {
+  id          String @id @default(uuid())
+  name        String
+  email       String @unique
+  password    String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  cows        Cow[]
+
+  @@map("users")
+}
+
+model Cow {
+  id          String @id @default(uuid())
+  earring     Int @unique
+  breed       String?
+  birthDate   String?
+  milkmaid    Boolean?
+  weight      Float?
+  forSale    Boolean?
+  User       User@relation(fields: [id], references: [id])
+  vaccines    Vaccines[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("cows")
+}
+
+model Vaccines {
+  id          String @id @default(uuid())
+  name        String @unique
+  date        DateTime @default(now())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  cows       Cow @relation(fields: [id], references: [id])
+  @@map("vaccines")
+}
+
+model Literage {
+  id          String @id @default(uuid())
+  litres      Float
+  price       Float
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  date        DateTime
+  @@map("literage")
+}
+
+model Food {
+  id          String @id @default(uuid())
+  name        String @unique
+  amount      Float
+  validty     String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  @@map("food")
+}
