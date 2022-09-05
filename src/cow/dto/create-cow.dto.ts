@@ -9,5 +9,5 @@ export class CreateCowDto {
     weight: number
     forSale: boolean
     user: CreateUserDto
-    vaccines: CreateVaccineDto
+    //vaccines: CreateVaccineDto
 }

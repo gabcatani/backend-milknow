@@ -15,7 +15,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model User {
   id          String @id @default(uuid())
   name        String
@@ -36,8 +35,11 @@ model Cow {
   milkmaid    Boolean?
   weight      Float?
   forSale    Boolean?
-  User       User@relation(fields: [id], references: [id])
+  user_id String
+  User       User?@relation(fields: [user_id], references: [id])
   vaccines    Vaccines[]
+  literage    Literage[]
+  food    Food[]
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
@@ -50,7 +52,8 @@ model Vaccines {
   date        DateTime @default(now())
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  cows       Cow @relation(fields: [id], references: [id])
+  cow_id String
+  cow       Cow?@relation(fields: [cow_id], references: [id])
   @@map("vaccines")
 }
 
@@ -61,6 +64,8 @@ model Literage {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   date        DateTime
+  cow_id String
+  cow       Cow?@relation(fields: [cow_id], references: [id])
   @@map("literage")
 }
 
@@ -70,6 +75,8 @@ model Food {
   amount      Float
   validty     String
   createdAt   DateTime @default(now())
+  cow_id String
+  cow       Cow?@relation(fields: [cow_id], references: [id])
   updatedAt   DateTime @updatedAt
   @@map("food")
 }
