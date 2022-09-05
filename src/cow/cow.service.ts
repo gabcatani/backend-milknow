@@ -18,14 +18,25 @@ export class CowService {
     if (cowExists) {
       throw new Error('Cow already exists');
     }
-    
+    console.log(createCowDto.id)
     const cow = await this.prisma.cow.create({
-      data : createCowDto
+      data: {
+        id: createCowDto.id,
+        earring: createCowDto.earring,
+        breed: createCowDto.breed,
+        birthDate: createCowDto.birthDate,
+        milkmaid: createCowDto.milkmaid,
+        weight: createCowDto.weight,
+        forSale: createCowDto.forSale,
+        //user: createCowDto.user,
+        //vaccines: createCowDto.vaccines
+      }
     })
     return cow
 }
 
   findAll() {
+    console.log('findAll called')
     const cow = this.prisma.cow.findMany();
     return cow
   }
@@ -45,13 +56,7 @@ export class CowService {
         id
       },
       data: {
-        earring: updateCowDto.earring,
-        breed: updateCowDto.breed,
-        birthDate: updateCowDto.birthDate,
-        milkmaid: updateCowDto.milkmaid,
-        weight: updateCowDto.weight,
-        forSale: updateCowDto.forSale,
-        //userId: updateCowDto.userId
+
       }
     })
     return cow
