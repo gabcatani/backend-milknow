@@ -7,8 +7,10 @@ export class ApiService {
 constructor(private prisma: PrismaService) {}
 
   async findProdToday() {
-    const queryResult = await this.prisma.$queryRaw`SELECT * from Users `
-    return
+
+    const result = await this.prisma.$queryRaw`SELECT * FROM users`
+
+    return result
   }
 
   findProdYesterday() {

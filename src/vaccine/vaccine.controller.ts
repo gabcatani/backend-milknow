@@ -19,7 +19,7 @@ export class VaccineController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.vaccineService.findOne(+id);
+    return this.vaccineService.findOne(id);
   }
 
   @Patch(':id')

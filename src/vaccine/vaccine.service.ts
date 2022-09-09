@@ -1,19 +1,46 @@
 import { Injectable } from '@nestjs/common';
+import { PrismaService } from 'src/database/prisma.service';
 import { CreateVaccineDto } from './dto/create-vaccine.dto';
 import { UpdateVaccineDto } from './dto/update-vaccine.dto';
 
 @Injectable()
 export class VaccineService {
-  create(createVaccineDto: CreateVaccineDto) {
-    return 'This action adds a new vaccine';
+
+  constructor(private prisma: PrismaService) {}
+  
+  async create(createVaccineDto: CreateVaccineDto) {
+
+    const vaccineExists = await this.prisma.vaccines.findFirst({
+      where: {
+        name: createVaccineDto.name,
+      }    
+    })
+
+    if (vaccineExists) {
+      throw new Error('Vaccine already exists');
+    }
+
+    const vaccine = await this.prisma.vaccines.create({
+      data: createVaccineDto
+    });
+
+    return vaccine;
   }
 
-  findAll() {
-    return `This action returns all vaccine`;
+  async findAll() {
+    const vaccines = await this.prisma.vaccines.findMany();
+    return vaccines;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} vaccine`;
+  async findOne(id: string) {
+
+    const vaccine = await this.prisma.vaccines.findUnique({
+      where: { 
+        id: id 
+      }
+    })
+    console.log(vaccine);
+    return vaccine;
   }
 
   update(id: number, updateVaccineDto: UpdateVaccineDto) {
