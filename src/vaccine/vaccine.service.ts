@@ -10,16 +10,6 @@ export class VaccineService {
   
   async create(createVaccineDto: CreateVaccineDto) {
 
-    const vaccineExists = await this.prisma.vaccines.findFirst({
-      where: {
-        name: createVaccineDto.name,
-      }    
-    })
-
-    if (vaccineExists) {
-      throw new Error('Vaccine already exists');
-    }
-
     const vaccine = await this.prisma.vaccines.create({
       data: createVaccineDto
     });

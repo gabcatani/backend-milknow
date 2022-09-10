@@ -59,7 +59,9 @@ model Vaccines {
 
   id          String @id @default(uuid())
   name        String @unique
-  date        String 
+  date        String
+  unique
+  next 
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
@@ -74,7 +76,7 @@ model Literage {
   id          String @id @default(uuid())
   litres      Float
   price       Float
-  date        DateTime
+  date        String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 

@@ -1,15 +1,27 @@
 import { Injectable } from '@nestjs/common';
+import { PrismaService } from 'src/database/prisma.service';
 import { CreateLiterageDto } from './dto/create-literage.dto';
 import { UpdateLiterageDto } from './dto/update-literage.dto';
 
 @Injectable()
 export class LiterageService {
-  create(createLiterageDto: CreateLiterageDto) {
-    return 'This action adds a new literage';
+
+  constructor(private prisma: PrismaService) {}
+
+  async create(createLiterageDto: CreateLiterageDto) {
+
+    const data = await this.prisma.literage.create({
+      data: createLiterageDto
+    })
+
+    return data
   }
 
-  findAll() {
-    return `This action returns all literage`;
+  async findAll() {
+    
+    const data = await this.prisma.literage.findMany()
+
+    return data
   }
 
   findOne(id: number) {
