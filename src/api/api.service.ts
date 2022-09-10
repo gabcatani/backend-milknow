@@ -8,9 +8,9 @@ constructor(private prisma: PrismaService) {}
 
   async findProdToday() {
 
-    const result = await this.prisma.$queryRaw`SELECT * FROM users`
+    const data = await this.prisma.$queryRaw`SELECT * FROM users`
 
-    return result
+    return data
   }
 
   findProdYesterday() {
@@ -19,6 +19,13 @@ constructor(private prisma: PrismaService) {}
 
   findProdBestDay() {
     return 
+  }
+
+  async findCowScreenData() {
+
+    const data = await this.prisma.$queryRaw`SELECT * FROM cows, vaccines`
+
+    return data
   }
 
 }

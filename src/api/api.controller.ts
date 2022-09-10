@@ -23,4 +23,9 @@ export class ApiController {
     return this.apiService.findProdBestDay();
   }
 
+  @Get('cowscreen')
+  findCowScreenData() {
+    return this.apiService.findCowScreenData();
+  }
+
 }
